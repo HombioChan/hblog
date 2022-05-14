@@ -43,13 +43,13 @@ pom.xml的元素大部分都可以在profile中配置。
     -   `<plugins>`
     
 ### 触发生效
-#### 通过命令行
+#### 1.通过命令行
 如下，在命令行中指定-P参数，可以指定激活的profile列表，以`,`分隔，其中`?`表示profile是可选的，当配置解析失败时可以跳过，避免执行失败。
 ```
 mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
 ```
 
-#### 通过settings.xml
+#### 2.通过settings.xml
 这里激活的是在`settings.xml`中声明的profile
 ```
 <settings>
@@ -61,7 +61,7 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
 </settings>
 ```
 
-#### 默认激活
+#### 3.默认激活
 ```
 <profiles>
   <profile>
@@ -74,8 +74,9 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
 </profiles>
 ```
 
-#### 通过条件激活
+#### 4.通过条件激活
 1. JDK版本
+
 ```
 <profiles>
   <profile>
@@ -86,7 +87,9 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
   </profile>
 </profiles>
 ```
+
 2. OS信息
+
 ```
 <profiles>
   <profile>
@@ -102,7 +105,9 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
   </profile>
 </profiles>
 ```
+
 3. 系统属性
+
 ```
 // a. 存在系统属性debug即生效
 <profiles>
@@ -141,9 +146,13 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
   </profile>
 </profiles>
 ```
+
+
 4. 文件是否存在
+
 - `exists`
 - `missing`
+
 ```
 <profiles>
   <profile>
@@ -166,7 +175,6 @@ mvn help:active-profiles
 ```
 mvn groupId:artifactId:goal -P !profile-1,!profile-2,!?profile-3
 ```
-
 ### Profile读取顺序
 同一个配置文件，相同的配置，后定义的优先级高。
 ```

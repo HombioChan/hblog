@@ -16,6 +16,8 @@ Java version: 1.8.0_291, vendor: Oracle Corporation
 - packaging = maven-plugin
 - 引入依赖：maven-plugin-api、maven-plugin-annotations
 - 使用插件：maven-compiler-plugin、maven-plugin-plugin  (均使用当前最新版本[--传送门--](https://maven.apache.org/plugins/index.html))
+
+完整配置如下
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -65,6 +67,7 @@ Java version: 1.8.0_291, vendor: Oracle Corporation
 
 </project>
 ```
+
 ### 2. 开发Mojo
 ```
 //插件任务名称：tell

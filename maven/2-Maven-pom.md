@@ -11,6 +11,7 @@ POM中的元素比较多，遇到不熟悉的元素，你可以到 [这里](http
 最小份POM文件只需要包括
 - 模型版本
 - 项目的坐标信息
+
 ```
 <project>
   <modelVersion>4.0.0</modelVersion>

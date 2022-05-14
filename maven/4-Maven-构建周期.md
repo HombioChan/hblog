@@ -30,6 +30,7 @@ mvn [phase]
 phase=compile|test|package|...
 ```
 ### 构建阶段如何执行任务
+
 阶段本身只是个概念，没有任何执行逻辑，实际的任务执行是由插件完成。
 
 以构建阶段`compile`为例，默认挂载了插件`compiler`的`compile`任务，所以每次运行命令`mvn compile`时，实际执行的是插件`compiler`的`compile`任务。
@@ -53,7 +54,6 @@ mvn compiler:compile
 默认情况下，Maven为每个阶段都挂载了一个默认的插件任务，比如
 ```
 compile <-- compiler:compile
-//详情见官网
 ```
 
 开发者也可以通过配置在构建阶段绑定插件任务，比如下面这个例子，将插件任务`display-maven-plugin:time`挂载到了构建阶段`compile`

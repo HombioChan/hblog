@@ -43,7 +43,7 @@
 
 比如运行
 ```
-mvn org.eclipse.jetty:jetty:run`
+mvn org.eclipse.jetty:jetty:run
 ```
 如果在`pluginGroups`中指定了`org.eclipse.jetty`，如下
 ```

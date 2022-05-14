@@ -173,6 +173,7 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
 
 #### 不同类型的参数映射
 1. 简单对象
+
 ```
 ...
     @Parameter(property = "myString")
@@ -184,7 +185,10 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
 </configuration>
 ...
 ```
+
 2. 复杂对象
+
+
 ```
 
 ...
@@ -200,7 +204,9 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
 </configuration>
 ...
 ```
+
 3. List
+
 ```
 ...
     @Parameter(property = "animals")
@@ -227,7 +233,9 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
   ...
 </project>
 ```
+
 4. Map
+
 ```
 ...
     @Parameter(property = "myMap")
@@ -242,9 +250,10 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
     </myMap>
   </configuration>
 ...
-
 ```
+
 5. Properties
+
 ```
 ...
     @Parameter(property = "myPro")
@@ -265,7 +274,9 @@ mvn myquery:query -Dquery.url=http://maven.apache.org
   </configuration>
 ...
 ```
+
 6. 数组
+
 ```
 @Parameter
 private String[] myArray;
@@ -275,7 +286,6 @@ private String[] myArray;
   <param>value2</param>
 </myArray>
 ```
-
 
 ### 一个完整的插件配置
 ```

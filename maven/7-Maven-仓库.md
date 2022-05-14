@@ -15,7 +15,7 @@ Maven打包的产物，官方定义为artifact，我们不妨称之为构件，�
 </settings>
 ```
 ### 远程仓库配置
-远程仓库可以在`pom.xml`，也可以在`settings.xml`文件中配置，这些配置在查找下载固件的时候会被使用到。
+远程仓库可以在`pom.xml`，也可以在`settings.xml`文件中配置，这些配置在查找下载构件的时候会被使用到。
 ```
   ...
   <repositories>
