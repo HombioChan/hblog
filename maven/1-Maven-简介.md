@@ -19,7 +19,9 @@ mvn --version
 
 ### 创建一个项目
 首先我们的创建一个Maven可以识别的项目，即当前项目下必须要有一个`pom.xml`文件。简单起见，直接通过Maven提供的命令创建。
-> 这里目的只是为了创建一个项目，可以先忽略命令行参数的作用
+> 这里目的只是为了创建一个项目，可以先忽略命令行参数的作用  
+
+
 ```
 mvn -B archetype:generate\
     -DgroupId=com.mycompany.app\
