@@ -16,24 +16,25 @@ p >= r
 ```
 3. 翻译为代码
 ```java
+public class Sort {
     public static void mergeSort(int[] numbers) {
-        mergeSort(numbers, 0, numbers.length-1);
+        mergeSort(numbers, 0, numbers.length - 1);
     }
 
     private static void mergeSort(int[] numbers, int start, int end) {
-        if(start < end) {
-            int mid = start + (end-start)/2;
+        if (start < end) {
+            int mid = start + (end - start) / 2;
             mergeSort(numbers, start, mid);
-            mergeSort(numbers, mid+1, end);
+            mergeSort(numbers, mid + 1, end);
             merge(numbers, start, mid, end);
         }
     }
 
     private static void merge(int[] numbers, int start, int mid, int end) {
-        int[] tmp = new int[end-start+1];
-        int i = start, j = mid+1, index = 0;
+        int[] tmp = new int[end - start + 1];
+        int i = start, j = mid + 1, index = 0;
         while (i <= mid && j <= end) {
-            if(numbers[i] < numbers[j]) {
+            if (numbers[i] < numbers[j]) {
                 tmp[index] = numbers[i];
                 i += 1;
             } else {
@@ -42,7 +43,7 @@ p >= r
             }
             index += 1;
         }
-        while(i <= mid) {
+        while (i <= mid) {
             tmp[index] = numbers[i];
             i += 1;
             index += 1;
@@ -53,11 +54,12 @@ p >= r
             index += 1;
         }
         i = start;
-        for (int k=0; k<tmp.length; k++) {
+        for (int k = 0; k < tmp.length; k++) {
             numbers[i] = tmp[k];
             i += 1;
         }
     }
+}
 ```
 ### 时间复杂度
 - 最好：O(nlogn)
@@ -81,15 +83,16 @@ p >= r
 ```
 3. 翻译为代码
 ```java
+public class Sort {
     public static void quickSort(int[] numbers) {
-        quickSort(numbers, 0, numbers.length-1);
+        quickSort(numbers, 0, numbers.length - 1);
     }
 
     private static void quickSort(int[] numbers, int start, int end) {
         if (start < end) {
             int pv = partition(numbers, start, end);
-            quickSort(numbers, start, pv-1);
-            quickSort(numbers, pv+1, end);
+            quickSort(numbers, start, pv - 1);
+            quickSort(numbers, pv + 1, end);
         }
     }
 
@@ -114,7 +117,7 @@ p >= r
         numbers[start] = val;
         return start;
     }
-
+}
 ```
 ### 时间复杂度
 - 最好：O(nlogn)
