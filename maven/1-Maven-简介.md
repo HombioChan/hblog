@@ -77,3 +77,4 @@ mvn clean
 如上所见，Maven已经提供了一系列开箱即用的命令，用于执行对应的构建任务，确实是简化了开发者的构建工作。
 
 接下来，我会深入介绍一下Maven提供的一些常用特性，让你知其然，也知其所以然，从而更好地使用这个工具，而不是停留在简单的命令调用层次。
+https://github.com/HombioChan/hblog/tree/main/maven
