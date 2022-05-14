@@ -1,0 +1,190 @@
+## 前言
+时间复杂度O(nlogn)的经典排序算法有以下2种
+1. 归并排序
+2. 快速排序
+
+## 归并排序
+### 实现
+归并排序使用到了递归，我们可以按照三步走战略写出递归代码
+1. 发现规律，推导出递归方程
+```
+mergeSort(p,r) = merge(mergSort(p,q), mergeSort(q+1, r)) 
+```
+2. 终止条件
+```
+p >= r
+```
+3. 翻译为代码
+```java
+    public static void mergeSort(int[] numbers) {
+        mergeSort(numbers, 0, numbers.length-1);
+    }
+
+    private static void mergeSort(int[] numbers, int start, int end) {
+        if(start < end) {
+            int mid = start + (end-start)/2;
+            mergeSort(numbers, start, mid);
+            mergeSort(numbers, mid+1, end);
+            merge(numbers, start, mid, end);
+        }
+    }
+
+    private static void merge(int[] numbers, int start, int mid, int end) {
+        int[] tmp = new int[end-start+1];
+        int i = start, j = mid+1, index = 0;
+        while (i <= mid && j <= end) {
+            if(numbers[i] < numbers[j]) {
+                tmp[index] = numbers[i];
+                i += 1;
+            } else {
+                tmp[index] = numbers[j];
+                j += 1;
+            }
+            index += 1;
+        }
+        while(i <= mid) {
+            tmp[index] = numbers[i];
+            i += 1;
+            index += 1;
+        }
+        while (j <= end) {
+            tmp[index] = numbers[j];
+            j += 1;
+            index += 1;
+        }
+        i = start;
+        for (int k=0; k<tmp.length; k++) {
+            numbers[i] = tmp[k];
+            i += 1;
+        }
+    }
+```
+### 时间复杂度
+- 最好：O(nlogn)
+- 最坏：O(nlogn)
+- 平均：O(nlogn)
+### 空间复杂度
+平均空间复杂度为 O(n)，所以是非原地排序
+### 稳定性
+归并排序是稳定的排序算法，排序之后相同元素的先后顺序不变。
+
+## 快速排序
+### 实现
+快速排序也使用到了递归思想，我们可以按照三步走战略写出递归代码
+1. 发现规律，推导出递归方程
+```
+quickSort(p,r) = quickSort(p,q) + quickSort(q+1, r) 
+```
+2. 终止条件
+```
+p >= r
+```
+3. 翻译为代码
+```java
+    public static void quickSort(int[] numbers) {
+        quickSort(numbers, 0, numbers.length-1);
+    }
+
+    private static void quickSort(int[] numbers, int start, int end) {
+        if (start < end) {
+            int pv = partition(numbers, start, end);
+            quickSort(numbers, start, pv-1);
+            quickSort(numbers, pv+1, end);
+        }
+    }
+
+    private static int partition(int[] numbers, int start, int end) {
+        int val = numbers[start];
+        while (start < end) {
+            while (start < end && numbers[end] > val) {
+                end -= 1;
+            }
+            if (start < end) {
+                numbers[start] = numbers[end];
+                start += 1;
+            }
+            while (start < end && numbers[start] < val) {
+                start += 1;
+            }
+            if (start < end) {
+                numbers[end] = numbers[start];
+                end -= 1;
+            }
+        }
+        numbers[start] = val;
+        return start;
+    }
+
+```
+### 时间复杂度
+- 最好：O(nlogn)
+- 最坏：O(nlogn)
+- 平均：O(n2)
+### 空间复杂度
+平均空间复杂度为 O(1)，所以是原地排序
+### 稳定性
+归并排序是不稳定的排序算法，排序之后相同元素的先后顺序有可能发生变化。
+
+## 性能测试
+### 测试环境
+样本量为10，使用这插入、归并、快速排序这3种算法分别对长度为1000,5000,10000,50000,100000的乱序数组进行排序。
+```
+> java -version
+openjdk version "11.0.12" 2021-07-20 LTS
+OpenJDK Runtime Environment Corretto-11.0.12.7.2 (build 11.0.12+7-LTS)
+OpenJDK 64-Bit Server VM Corretto-11.0.12.7.2 (build 11.0.12+7-LTS, mixed mode)
+```
+```
+Hardware:
+    Hardware Overview:
+      Processor Name: Quad-Core Intel Core i5
+      Processor Speed: 2 GHz
+      Number of Processors: 1
+      Total Number of Cores: 4
+      L2 Cache (per Core): 512 KB
+      L3 Cache: 6 MB
+      Hyper-Threading Technology: Enabled
+      Memory: 16 GB
+```
+
+### 报告
+```
+样本数据：10, 数组长度：1000
+插入排序-avg-cost：2.5 ms
+归并排序-avg-cost：0.3 ms
+快速排序-avg-cost：0.2 ms
+
+样本数据：10, 数组长度：5000
+插入排序-avg-cost：2.0 ms
+归并排序-avg-cost：0.7 ms
+快速排序-avg-cost：0.4 ms
+
+样本数据：10, 数组长度：10000
+插入排序-avg-cost：7.4 ms
+归并排序-avg-cost：1.3 ms
+快速排序-avg-cost：0.7 ms
+
+样本数据：10, 数组长度：50000
+插入排序-avg-cost：178.3 ms
+归并排序-avg-cost：6.2 ms
+快速排序-avg-cost：3.5 ms
+
+样本数据：10, 数组长度：100000
+插入排序-avg-cost：701.9 ms
+归并排序-avg-cost：15.2 ms
+快速排序-avg-cost：8.6 ms
+```
+### 结论
+1. 归并排序和快速排序明显快于插入排序，随着数据规模的增大，差距越明显
+2. 快速排序快于归并排序，随着数据规模的增大，差距逐渐拉大
+
+## 拓展问题
+### 为什么归并排序的时间复杂度稳定为nlogn，但实际应用的更多的排序算法是快速排序？
+归并排序不是原地排序，空间复杂度为O(n)
+### 归并排序和插入排序的差异
+归并排序是先划分再处理（合并）数据，排序算法是先处理（数据划分）数据再划分
+
+### 快速排序如何减少最坏复杂度O(n2)的出现
+划分数据选择参考值时，尽可能的避免取到最小值或者最大值，可以采用以下方法
+- 随机取数：在数据区间内随机取一个数作为参考值
+- 三数取中法：比较第一个数、中间数、最后一个数，取中间值作为参考值
