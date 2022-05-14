@@ -75,7 +75,7 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
 ```
 
 #### 4.通过条件激活
-1. JDK版本
+1) JDK版本  
 
 ```
 <profiles>
@@ -87,8 +87,7 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
   </profile>
 </profiles>
 ```
-
-2. OS信息
+2) OS信息  
 
 ```
 <profiles>
@@ -106,7 +105,7 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
 </profiles>
 ```
 
-3. 系统属性
+3) 系统属性  
 
 ```
 // a. 存在系统属性debug即生效
@@ -146,9 +145,7 @@ mvn groupId:artifactId:goal -P profile-1,profile-2,?profile-3
   </profile>
 </profiles>
 ```
-
-
-4. 文件是否存在
+4) 文件是否存在  
 
 - `exists`
 - `missing`
