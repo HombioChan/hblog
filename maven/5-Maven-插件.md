@@ -106,6 +106,9 @@ mvn compiler:compile
 ```
 #### 2. 挂载到构建周期阶段运行
 接着上面的例子，修改`pom.xml`，将`compile`任务挂载到编译阶段`compile`
+
+> 实际上compile也指定了默认的phase:compile，无需再通过pom.xml声明，下面只是举例子。
+
 ```
 ...
   <execution>
