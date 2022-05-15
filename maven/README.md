@@ -9,3 +9,5 @@
 - [仓库](7-Maven-仓库.md)
 - [插件开发](8-Maven-插件开发.md)
 - [插件的默认执行Id](9-Maven-插件的默认执行Id.md)
+- [打工人的settings](10-Maven-打工人的settings.md)
+- [SNAPSHOT依赖更新](11-SNAPSHOT依赖更新.md)
