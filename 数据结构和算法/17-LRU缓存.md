@@ -15,160 +15,154 @@
 我们将使用LRU替换策略的缓存称为LRU缓存。
 
 ## LRU缓存实现
+基本原理：使用链表来存储数据，新加入或者最近被访问的数据移动到头部，渐渐的尾部即为最近最少访问的数据，缓存满了之后，移除掉尾部的最后一个数据。
 
-### 双向链表
-使用链表来存储数据，新加入或者最近被访问的数据移动到头部，渐渐的尾部即为最近最少访问的数据，缓存满了之后，移除掉尾部的最后一个数据。
-```go
-type Pair stuct {
-    Key int
-    Value int
+接下来通过Java逐步实现一个高性能的LRU缓存。
+
+### 1. 定义接口
+```java
+public interface ICache {
+    void set(int key, int value);
+    int get(int key);
 }
-
-type Node struct {
-    Data *Pair
-    Next *Node
-    Pre *Node
-}
-
-type LRUCache struct {
-    Head *Node
-    Tail *Node
-    Capacity int
-    Length int
-}
-
-func Constructor(capacity int) LRUCache {
-    dummyTail := &Node{0, nil, nil}
-    dummyHead := &Node{0, nil, nil}
-    dummyHead.Next = dummyTail
-    dummyTail.Pre = dummyHead
-    return &LRUCache{dummyHead, dummyTail, capacity, 0}
-}
-
-func (this *LRUCache) Get(key int) int {
-    p := this.Head.Next
-    for p != this.Tail {
-        if p.Data.Key == key {
-            this.removeNode(p)
-            this.moveToHead(p)
-            return p.Data.Value
-        }
-        p = p.Next
-    }
-    return -1
-}
-
-func (this *LRUCache) removeNode(node *Node) {
-    node.Pre.Next = node.Next
-    node.Next.Pre = node.Pre
-    node.Pre = nil
-    node.Next = nil
-}
-
-func (this *LRUCache) moveToHead(node *Node) {
-    node.Next = this.Head.Next
-    node.Pre = this.Head
-    node.Pre.Next = node
-    node.Next.Pre = node
-}
-
-func (this *LRUCache) Put(key, value int) {
-    p := this.Head.Next
-    for p != this.Tail {
-        if p.Data.Key == key {
-            //存在即更新，同时移动到头部
-            p.Data.Value = value;
-            this.removeNode(p)
-            this.moveToHead(p)
-        }
-        p = p.Next
-    }
-    if p == this.Tail {
-        data := &Data{key, value}
-        node := &Node{data, nil}
-        this.moveToHead(node)
-        this.Length += 1
-        if this.Length > this.Capacity {
-            //缓存已满，删除尾部数据
-            this.removeNode(this.Tail.Pre)
-            this.Length -= 1
-        }
-    }
-}
-
 ```
-时间复杂度分析
-- 插入：O(n)
-- 查询：O(n)
 
+### 2.简单链表实现
+通过链表实现，时间复杂度如下
+- set: O(n)
+- get: O(n)
 
-### [双向链表 + 哈希表](https://leetcode-cn.com/problems/lru-cache/)
+```java
 
-使用哈希表来存储缓存数据的和链表的映射关系，可以将时间复杂度优化到O(1)
-```go
-type Node struct {
-    Key int
-    Value int
-    Next *Node
-    Pre *Node
-}
+public class SimpleLRUCache implements ICache{
+    private final LinkedList<Pair> linkedList;
+    private final int capacity;
 
-type LRUCache struct {
-    Head *Node
-    Tail *Node
-    Capacity int
-    Length int
-    HM map[int]*Node
-}
-
-func Constructor(Capacity int) LRUCache {
-    dummyHead := &Node{0, 0, nil, nil}
-    dummyTail := &Node{0, 0, nil, nil}
-    dummyHead.Next = dummyTail
-    dummyTail.Pre = dummyHead
-    return LRUCache{dummyHead, dummyTail, Capacity, 0, map[int]*Node{}}
-}
-
-func (this *LRUCache) Get(key int) int {
-    if node, has := this.HM[key]; has {
-        this.removeNode(node)
-        this.moveToHead(node)
-        return node.Value
+    public SimpleLRUCache(int capacity) {
+        this.linkedList = new LinkedList<>();
+        this.capacity = capacity;
     }
-    return -1
-}
 
-func (this *LRUCache) removeNode(node *Node) {
-    node.Pre.Next = node.Next
-    node.Next.Pre = node.Pre
-    node.Next = nil
-    node.Pre = nil
-}
+    @Override
+    public void set(int key, int value) {
+        for (Pair pair : linkedList) {
+            if (pair.key == key) {
+                pair.value = value;
+                return;
+            }
+        }
+        if (capacity == linkedList.size()) {
+            linkedList.removeLast();
+        }
+        linkedList.offerFirst(new Pair(key, value));
+    }
 
-func (this *LRUCache) moveToHead(node *Node) {
-    node.Next = this.Head.Next
-    node.Pre = this.Head
-    node.Next.Pre = node
-    node.Pre.Next = node
-}
+    @Override
+    public int get(int key) {
+        for (Pair pair : linkedList) {
+            if (pair.key == key) {
+                linkedList.remove(pair);
+                linkedList.offerFirst(pair);
+                return pair.value;
+            }
+        }
+        return -1;
+    }
 
-func (this *LRUCache) Put(key int, value int)  {
-    if node, has := this.HM[key]; has {
-        node.Value = value
-        this.removeNode(node)
-        this.moveToHead(node)
-    } else {
-        node := &Node{key, value, nil, nil}
-        this.HM[key] = node
-        this.moveToHead(node)
-        this.Length += 1
-        if (this.Length > this.Capacity) {
-            toRemoveNode := this.Tail.Pre
-            delete(this.HM, toRemoveNode.Key)
-            this.removeNode(toRemoveNode)
-            this.Length -= 1
+    private static class Pair {
+        int key;
+        int value;
+
+        public Pair(int key, int value) {
+            this.key = key;
+            this.value = value;
         }
     }
 }
+```
 
+
+### 3.[链表+哈希表实现](https://leetcode-cn.com/problems/lru-cache/)
+使用哈希表来存储缓存数据的和链表的映射关系，可以将时间复杂度优化到O(1)
+
+```java
+
+public class FastLRUCache implements ICache{
+
+    private final LinkedList<Pair> linkedList;
+    private final Map<Integer, Pair> map;
+    private final int capacity;
+
+    public FastLRUCache(int capacity) {
+        this.linkedList = new LinkedList<>();
+        this.map = new HashMap<>();
+        this.capacity = capacity;
+    }
+
+    @Override
+    public void set(int key, int value) {
+        Pair pair = map.get(key);
+        if (Objects.isNull(pair)) {
+            if (capacity == linkedList.size()) {
+                Pair toRemovePair = linkedList.removeLast();
+                map.remove(toRemovePair.key);
+            }
+            pair = new Pair(key, value);
+            map.put(key, pair);
+        } else {
+            pair.value = value;
+            linkedList.remove(pair);
+        }
+        linkedList.offerFirst(pair);
+    }
+
+    @Override
+    public int get(int key) {
+        Pair pair = map.get(key);
+        if (Objects.isNull(pair)) {
+            return -1;
+        }
+        linkedList.remove(pair);
+        linkedList.offerFirst(pair);
+        return pair.value;
+    }
+
+    private static class Pair {
+        int key;
+        int value;
+
+        public Pair(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+}
+```
+### 进一步优化
+其实，Java中有一个类 `LinkedHashMap` ，内部已经实现了以上逻辑，可以理解为，`LinkedHashMap`就是一个自动扩容的LRU缓存，我们只需稍加改造，就能快速实现一个容量受制的LRU缓存。
+
+```java
+public class BeautifulLRUCache implements ICache {
+    private final Map<Integer, Integer> lruMap;
+    private final int capacity;
+
+    public BeautifulLRUCache(int capacity) {
+        lruMap = new LinkedHashMap<>(2*capacity, 0.75f, true);
+        this.capacity = capacity;
+    }
+
+    @Override
+    public void set(int key, int value) {
+        if (lruMap.size() == capacity) {
+            Integer next = lruMap.keySet().iterator().next();
+            lruMap.remove(next);
+        }
+        lruMap.put(key, value);
+    }
+
+    @Override
+    public int get(int key) {
+        return lruMap.getOrDefault(key, -1);
+    }
+}
 ```
