@@ -38,29 +38,38 @@
         </server>
     </servers>
 
-    <repositories>
-        <repository>
-            <id>internal-nexus</id>
-            <name>Internal Nexus Repository</name>
-            <url>${internal-nexus-url}</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <profiles>
+        <profile>
+            <id>internal-profile</id>
+            <repositories>
+                <repository>
+                    <id>internal-nexus</id>
+                    <name>Internal Nexus Repository</name>
+                    <url>#{internal-nexus-url}</url>
+                    <layout>default</layout>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>internal-nexus</id>
-            <name>Internal Nexus Repository</name>
-            <url>${internal-nexus-url}</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>internal-nexus</id>
+                    <name>Internal Nexus Repository</name>
+                    <url>#{internal-nexus-url}</url>
+                    <layout>default</layout>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+     <activeProfiles>
+        <activeProfile>internal-profile</activeProfile>
+     </activeProfiles>
 
 </settings>
 ```
