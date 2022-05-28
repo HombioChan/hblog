@@ -100,7 +100,7 @@ public class FastLFUCache implements ICache{
     private final Map<Integer, LinkedList<Pair>> countLinkedListMap = new HashMap<>();
     private int capacity;
 
-    public MoreFastLFUCache(int capacity) {
+    public FastLFUCache(int capacity) {
         this.capacity = capacity;
     }
 
