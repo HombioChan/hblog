@@ -3,5 +3,6 @@
 
 ### 技术类
 - [数据结构和算法](数据结构和算法/README.md)
-- [Maven](maven/README.md)
 - [并发编程](并发编程/README.md)
+- [Maven](maven/README.md)
+- [Git](git/README.md)
