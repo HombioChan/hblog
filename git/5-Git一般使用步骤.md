@@ -2,7 +2,7 @@
 本地创建好仓库后，就可以使用Git进行版本控制工作了，一般步骤为
 1. 修改工作区文件
 2. 提交修改到缓存区
-3. 提交修改到索引区
+3. 提交修改到本地仓库
 4. 同步修改到远程仓库
 
 以下例子使用的Git版本为
@@ -58,7 +58,7 @@ Changes to be committed:
 2. 通过命令`git rm --cached`将修改回退到工作区。
 
 
-### 提交修改到索引区
+### 提交修改到本地仓库
 ```
 > git commit -m "add a.txt"
 [master (root-commit) a350eda] add a.txt

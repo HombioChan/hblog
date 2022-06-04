@@ -8,7 +8,7 @@
 ### 本地初始化
 创建好项目文件夹，执行`git init`即可，比如在我的电脑
 ```
-> cd ~/workspack/git
+> cd ~/workspace/git
 > mkdir git-demo1
 > cd git-demo1
 > git init
@@ -16,7 +16,7 @@
 执行完命令后，在当前目录下会生成一个`.git`的目录，这个就是本地仓库。
 
 ### 从远处仓库克隆
-可以到公共的代码仓库平台，比如`gitee`，`github`，`gitlab`，创建一个项目，或者选择一个开源的项目，获取到下载链接，然后使用 `git clone`命令克隆到本地。
+可以到公共的代码仓库平台，比如`gitee`，`github`，`gitlab`，创建一个项目，或者选择一个开源的项目，获取到下载链接，然后使用 `git clone`命令克隆到本地，比如
 
 ```
 git clone https://github.com/libgit2/libgit2
