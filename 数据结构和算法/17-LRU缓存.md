@@ -45,28 +45,37 @@ public class SimpleLRUCache implements ICache{
 
     @Override
     public void set(int key, int value) {
-        for (Pair pair : linkedList) {
-            if (pair.key == key) {
-                pair.value = value;
-                return;
+        Pair target = find(key);
+        if (Objects.isNull(target)) {
+            target = new Pair(key, value);
+            if (capacity == linkedList.size()) {
+                linkedList.removeLast();
             }
+        } else {
+            target.value = value;
+            linkedList.remove(target);
         }
-        if (capacity == linkedList.size()) {
-            linkedList.removeLast();
-        }
-        linkedList.offerFirst(new Pair(key, value));
+        linkedList.offerFirst(target);
     }
 
     @Override
     public int get(int key) {
+        Pair target = find(key);
+        if (Objects.isNull(target)) {
+            return -1;
+        }
+        linkedList.remove(target);
+        linkedList.offerFirst(target);
+        return target.value;
+    }
+    
+    private Pair find(int key) {
         for (Pair pair : linkedList) {
             if (pair.key == key) {
-                linkedList.remove(pair);
-                linkedList.offerFirst(pair);
-                return pair.value;
+                return pair;
             }
         }
-        return -1;
+        return null;
     }
 
     private static class Pair {
@@ -89,13 +98,11 @@ public class SimpleLRUCache implements ICache{
 
 public class FastLRUCache implements ICache{
 
-    private final LinkedList<Pair> linkedList;
-    private final Map<Integer, Pair> map;
+    private final LinkedList<Pair> linkedList = new LinkedList<>();
+    private final Map<Integer, Pair> map = new HashMap<>();
     private final int capacity;
 
     public FastLRUCache(int capacity) {
-        this.linkedList = new LinkedList<>();
-        this.map = new HashMap<>();
         this.capacity = capacity;
     }
 

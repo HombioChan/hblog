@@ -6,7 +6,7 @@ Git支持为命令起别名，提高用户使用体验。
 ```
 git config --global alias.ci commit
 ```
-之后就可以使用`git cm` 来替代 `git commit`了
+之后就可以使用`git ci` 来替代 `git commit`了
 
 
 ### 常用的别名
