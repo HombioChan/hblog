@@ -12,6 +12,7 @@
 
 `Set`是组合`Map`实现的，可以理解为`value`为`null`的`Map`，对应的实现有`HashSet、LinkedHashSet、TreeSet`，搞懂了`Map`就搞懂了`Set`，所以就不划入这个分类中。
 
+> JCF 容器除了 `Vector、Stack、Hashtable`，都是线程不安全的。
 
 ### List
 #### LinkedList
@@ -159,3 +160,5 @@ headMap.forEach((k,v) -> System.out.printf("%s=%s\n", k, v));
 //输出：b=bbb c=ccc
 tailMap.forEach((k,v) -> System.out.printf("%s=%s\n", k, v));
 ```
+#### Hashtable
+`jdk 1.0`的容器类，现在不推荐使用，可以使用`HashMap`或者`LinkedHashMap`替代。
