@@ -31,7 +31,7 @@ git config --global credential.helper 'store --file ~/.my-credentials'
 git config --global credential.helper 'cache --timeout 30000'
 ```
 
-Git允许同时配置多种凭证类型，但查找特定服务器的凭证时，Git会按顺序查找，直到找到第一个回答。
+Git允许同时配置多种凭证类型，在查找特定服务器的凭证时，Git会按顺序查找，直到找到第一个回答。
 ```
 [credential]
     helper = store --file /mnt/thumbdrive/.git-credentials
@@ -39,7 +39,10 @@ Git允许同时配置多种凭证类型，但查找特定服务器的凭证时�
 ```
 
 ### GIT
+与使用 `SSH` 协议登录 `Linux`系统一样，在服务器配置好本机公钥之后，每次连接服务器无需任何操作。
 
-1. 本地使用`ssh-keygen`先生成公私钥，默认输出路径`~/.ssh`
+在服务器配置本机公钥的步骤如下：
+
+1. 本地使用`ssh-keygen`先生成公私钥，默认输出路径`~/.ssh`，如果已存在，跳到步骤2
 2. 找到公钥文件 `~/.ssh/id_rsa_pub`
 3. 将公钥配置到服务器

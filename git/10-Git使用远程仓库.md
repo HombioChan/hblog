@@ -8,7 +8,7 @@ git remote -v
 
 ### 新增远程仓库
 ```
-git remote add <name> <url>
+git remote add <remote> <url>
 ```
 比如
 ```
@@ -17,24 +17,25 @@ git add pb https://github.com/paulboone/ticgit
 
 ### 删除远程仓库
 ```
-git remote remove <name>
+git remote remove <remote>
 ```
 
 ### 重命名远程仓库
 ```
-git remote rename <old> <new>
+git remote reremote <old> <new>
 ```
 ### 查看某个远程仓库的详细信息
 ```
-git remote show <name>
+git remote show <remote>
 ```
 
 ### 从远程仓库拉取信息
 ```
-git fetch <name>
+git fetch <remote>
+git pull <remote>
 ```
 
 ### 推送提交到远程仓库
 ```
-git push <name>
+git push <remote>
 ```

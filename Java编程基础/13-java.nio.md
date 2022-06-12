@@ -1,7 +1,7 @@
 ## 序言
 `JDK1.4`，`Java` 引入了 `java.nio`库，既然有了 [java.io](12-java.io.md) 库，为什么还要引入 `java.nio` 库呢，这两者有什么区别？
 
-本节简单通过介绍`java.nio`引入的新特性：`channel buffer selector 异步Channel` 来回答这个问题。
+本节简单通过介绍`java.nio`引入的新特性：`channel、buffer、selector、异步channel` 来回答这个问题。
 
 ### Buffer
 `Buffer`本质上是一块内存，相当于`java.io`编程时读取数据前申请的`byte[]`数组。
@@ -23,7 +23,7 @@
 
 除了 read() 和 write()，accept()也支持阻塞和非阻塞模式。
 
-非阻塞的`Channel`一般会配合`Selector`，用于实现非阻塞的多路复用I/O模型。
+非阻塞的`Channel`一般搭配`Selector`，用于实现非阻塞的多路复用I/O模型。
 
 ### Selector
 如果不使用`Selector`，网络编程写出的非阻塞模式代码风格如下
@@ -91,13 +91,12 @@ while (true) {
 - BSD：kqueue
 
 ### 异步Channel
-尽管程序可以通过 `Selector` 避免手写轮询代码，但是 `Selector` 的底层仍然使用轮询实现，如何才能真正避免轮询代码呢。
+尽管程序可以通过 `Selector` 避免手写轮询代码，但是 `Selector` 的底层仍然使用轮询实现，如何才能真正避免轮询代码呢？
 
 在`JDK7`，`Java`对`java.nio`库进行升级，引入了支持异步模式的Channel：`AsynchronousFileChannel、AsynchronousSocketChannel、AsynchronousServerSocketChannel`。
 
 #### 什么是异步模式
-线程调用一个方法，注册一个事件监听器，当事件发生后，通知线程处理，期间线程可以去做其他的事情，或者什么也不做，这种模式称为异步模式。
-
+线程调用一个方法，注册一个事件`handle`，当事件发生后，通知线程处理，期间线程可以去做其他的事情，或者什么也不做，这种模式称为异步模式。
 
 ```
 AsynchronousServerSocketChannel serverChannel = AsynchronousServerSocketChannel.open();
@@ -117,11 +116,11 @@ serverChannel.accept(null, new CompletionHandler<AsynchronousSocketChannel, Obje
 
 ## 问题解答
 
-### 为什么引入`java.nio`
+### 为什么引入`java.nio`？
 
 1. `java.io` 设计不太合理，`java.nio`通过多用组合少用继承的设计思想，实现更加优雅
 2. `java.io` 只支持阻塞I/O，`java.nio`支持阻塞I/O、非阻塞I/O、异步I/O
 
 ### 什么时候用`java.nio`，什么时候用`java.io`？
-对于网络编程，首选java.nio`，对于文件读写，都可以。
+对于网络编程，首选`java.nio`，对于文件读写，都可以。
 
