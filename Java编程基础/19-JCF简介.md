@@ -71,7 +71,7 @@ queue.offer(1);
 queue.offer(2);
 queue.offer(3);
 while (!queue.isEmpty()) {
-    System.out.println(queue.poll()); // 输出：1 2 3
+    System.out.println(queue.pop()); // 输出：1 2 3
 }
 ```
 
@@ -83,7 +83,7 @@ queue.offer(1);
 queue.offer(2);
 queue.offer(3);
 while (!queue.isEmpty()) {
-    System.out.println(queue.poll()); // 输出：1 2 3
+    System.out.println(queue.pop()); // 输出：1 2 3
 }
 ```
 
@@ -116,9 +116,26 @@ System.out.println(map.get("hello")); // 输出：world
 ```
 
 #### LinkedHashMap
-在 `HashMap` 的基础上，再使用一个链表按时间顺序将键值对串联起来，从而实现按访问时间顺序遍历`Map`。
+在 `HashMap` 的基础上，再引入一个双向链表，从而支持按插入顺序、访问顺序有序访问。
+
+默认情况下按插入顺序访问
+```
+LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
+linkedHashMap.put("a", "aaa");
+linkedHashMap.put("b", "bbb");
+linkedHashMap.put("c", "ccc");
+// 输出：a=aaa b=bbb c=ccc
+linkedHashMap.forEach((k,v)-> System.out.printf("%s=%s\n", k,v));
+linkedHashMap.get("a");
+// 输出：a=aaa b=bbb c=ccc
+linkedHashMap.forEach((k,v)-> System.out.printf("%s=%s\n", k,v));
+// 输出：a=aaa b=bbb c=ccc
+linkedHashMap.get("b");
+linkedHashMap.forEach((k,v)-> System.out.printf("%s=%s\n", k,v));
 ```
 
+按照访问顺序访问
+```
 LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>(16, 0.75f, true);
 linkedHashMap.put("a", "aaa");
 linkedHashMap.put("b", "bbb");
